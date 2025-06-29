@@ -11,12 +11,12 @@ const {
   patchFavorite,
 } = require("../controllers/contacts/index");
 
-router.get("/contacts", getAllContacts);
-router.get("/contacts/:id", getContact);
-router.post("/contacts", initiateContact);
-router.patch("/contacts/:id", patchContact);
-router.put("/contacts/:id", putContact);
-router.delete("/contacts/:id", deleteContact);
-router.patch("/contacts/:id/favorite", patchFavorite);
+router.get("/", getAllContacts);
+router.get("/:id", getContact);
+router.post("/", initiateContact);
+router.patch("/:id", patchContact);
+router.put("/:id", putContact);
+router.delete("/:id", deleteContact);
+router.patch("/:id/favorite", patchFavorite);
 
 module.exports = router;
