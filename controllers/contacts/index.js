@@ -31,7 +31,12 @@ const getContact = async (req, res, next) => {
 const initiateContact = async (req, res, next) => {
   const { name, email, phone } = req.body;
   try {
-    const result = await createContact({ name, email, phone });
+    const result = await createContact({
+      name,
+      email,
+      phone,
+      owner: req.user._id,
+    });
     res.status(201).json(result);
   } catch (error) {
     next(error);
@@ -102,5 +107,5 @@ module.exports = {
   patchContact,
   putContact,
   deleteContact,
-  patchFavorite
+  patchFavorite,
 };

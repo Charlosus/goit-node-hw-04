@@ -7,8 +7,8 @@ const fetchContacts = () => {
 const fetchContact = (id) => {
   return Contact.findById({ _id: id });
 };
-const createContact = ({ name, email, phone }) => {
-  return Contact.create({ name, email, phone });
+const createContact = ({ name, email, phone, owner }) => {
+  return Contact.create({ name, email, phone, owner });
 };
 
 const updateContact = ({
