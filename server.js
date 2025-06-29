@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const apiRouter = require("./api/index");
+const passport = require("passport");
+const setJWTStrategy = require("./config/jwt");
 
 require("dotenv").config();
 
@@ -10,9 +12,11 @@ const { DB_HOST: urlDb } = process.env;
 const connection = mongoose.connect(urlDb);
 
 const app = express();
+setJWTStrategy();
 
 app.use(cors());
 app.use(express.json());
+app.use(passport.initialize());
 
 app.use("/api", apiRouter);
 

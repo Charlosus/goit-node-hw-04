@@ -32,14 +32,23 @@ const login = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: "User not registered yet" });
     }
-    const isPasswordCorrect = await bcrypt.compare(password, this.password);
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
       const payload = {
         id: user._id,
         email: user.email,
       };
       const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "24h" });
-      return res.json({ token });
+      user.token = token;
+      await user.save();
+
+      res.status(200).json({
+        token,
+        user: {
+          email: user.email,
+          subscription: user.subscription,
+        },
+      });
     } else {
       return res.status(401).json({ message: "Invalid email or password" });
     }

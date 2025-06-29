@@ -4,7 +4,7 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 const User = require("../models/User");
 
-export default function setJWTStrategy() {
+function setJWTStrategy() {
   const secret = process.env.SECRET;
   const params = {
     secretOrKey: secret,
@@ -24,3 +24,5 @@ export default function setJWTStrategy() {
     })
   );
 }
+
+module.exports = setJWTStrategy;

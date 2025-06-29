@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-export function authMiddleware(req, res, next) {
+function authMiddleware (req, res, next) {
     passport.authenticate(
         'jwt',
         {
@@ -15,3 +15,5 @@ export function authMiddleware(req, res, next) {
         }
     )(req, res, next);
 }
+
+module.exports = authMiddleware;
