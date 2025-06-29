@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const apiRouter = require('./api')
+const apiRouter = require("./api/index");
 
 require("dotenv").config();
 
@@ -11,12 +11,10 @@ const connection = mongoose.connect(urlDb);
 
 const app = express();
 
-app.use(cors()); 
-app.use(express.json()); 
+app.use(cors());
+app.use(express.json());
 
-
-
-app.use('/api', apiRouter)
+app.use("/api", apiRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: `not found - ${req.path}` });
