@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar");
 
 const signup = async (req, res, next) => {
   try {
@@ -12,8 +13,12 @@ const signup = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = await User.create({ email, password: hashedPassword });
+    const avatarURL = gravatar.url(email, { s: "250", d: "retro" }, true);
+    const newUser = await User.create({
+      email,
+      password: hashedPassword,
+      avatarURL,
+    });
     res.status(201).json({
       user: {
         email: newUser.email,
