@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const apiRouter = require("./api/index");
 const passport = require("passport");
 const setJWTStrategy = require("./config/jwt");
+const path = require("path");
 
 require("dotenv").config();
 
@@ -17,6 +18,7 @@ setJWTStrategy();
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", apiRouter);
 
