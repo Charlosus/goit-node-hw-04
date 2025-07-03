@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const apiRouter = require("./api/index");
 const passport = require("passport");
 const setJWTStrategy = require("./config/jwt");
+const path = require("path");
+const { setupFolder } = require("./middleware/helpers");
+const { tempDir, storageImageDir } = require("./middleware/upload");
 
 require("dotenv").config();
 
@@ -17,6 +20,7 @@ setJWTStrategy();
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", apiRouter);
 
@@ -34,15 +38,15 @@ app.use((err, req, res, next) => {
   }
 });
 
-const startServer = async () => {
+
+app.listen(3000, async () => {
   try {
     await connection;
-    console.log("DB connected");
-    app.listen(3000, () => console.log("server started on 3000 port"));
-  } catch (err) {
-    console.error(err);
+    await setupFolder(tempDir);
+    await setupFolder(storageImageDir); 
+    console.log("server started on 3000 port");
+  } catch (e) {
+    console.error("❌ Błąd podczas tworzenia folderów:", e.message);
     process.exit(1);
   }
-};
-
-startServer();
+});
