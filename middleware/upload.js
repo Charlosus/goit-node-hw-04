@@ -1,10 +1,9 @@
 const multer = require("multer");
 const path = require("path");
 const { v4: uuidV4 } = require("uuid");
-const fs = require('fs').promises
 
-const tempDir = path.join(process.cwd(), "../tmp");
-const storageImageDir = path.join(process.cwd(), "../public/avatars");
+const tempDir = path.join(process.cwd(), "tmp");
+const storageImageDir = path.join(process.cwd(), "public/avatars");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -37,22 +36,4 @@ const upload = multer({
   },
 });
 
-const changeAvatar = async (req, res, next) => {
-    if (!req.file) {
-        console.log("No file recevied");
-        return res.status(400).json({ message: 'File isnt a photo' })
-    }
-
-    const temporaryPath = req.file.path
-    const extension = path.extname(temporaryPath)
-    const fileName = `${uuidV4()}${extension}`
-    const filePath = path.join(storageImageDir, fileName);
-
-    try {
-        await fs.rename(temporaryPath, filePath)
-    } catch (e) {
-        await fs.unlink(temporaryPath);
-        return next(e)
-    }
-
-}
+module.exports = { tempDir, storageImageDir, upload };

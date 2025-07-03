@@ -9,11 +9,13 @@ const {
   current,
 } = require("../controllers/authController");
 const auth = require("../middleware/authMiddleware");
+const { upload } = require("../middleware/upload");
+const { changeAvatar } = require("../controllers/userAvatar");
 
 router.post("/signup", validate(signupSchema), signup);
 router.post("/login", validate(signupSchema), login);
 router.get("/logout", auth, logout);
 router.get("/current", auth, current);
-router.patch('/avatars', auth, upload.single("avatar"), changeAvatar)
+router.patch("/avatars", auth, upload.single("avatar"), changeAvatar);
 
 module.exports = router;
