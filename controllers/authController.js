@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
+const { v4: uuidv4 } = require("uuid");
+const sgMail = require("@sendgrid/mail");
 
 const signup = async (req, res, next) => {
   try {
@@ -14,10 +16,12 @@ const signup = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const avatarURL = gravatar.url(email, { s: "250", d: "retro" }, true);
+    const verificationToken = uuidv4();
     const newUser = await User.create({
       email,
       password: hashedPassword,
       avatarURL,
+      verificationToken,
     });
     res.status(201).json({
       user: {
