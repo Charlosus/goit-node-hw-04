@@ -103,8 +103,6 @@ const current = async (req, res, next) => {
 };
 
 const verification = async (req, res, next) => {
-  console.log("VERIFY route HIT"); // <‑‑ 1
-  console.log("token z URL:", req.params.verificationToken);
   try {
     const { verificationToken } = req.params;
     const user = await User.findOne({ verificationToken });
