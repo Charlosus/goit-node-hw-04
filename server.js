@@ -12,6 +12,7 @@ require("dotenv").config();
 
 const { DB_HOST: urlDb } = process.env;
 
+
 const connection = mongoose.connect(urlDb);
 
 const app = express();

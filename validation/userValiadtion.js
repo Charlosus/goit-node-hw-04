@@ -9,4 +9,10 @@ const signupSchema = Joi.object({
   "any.required": "{#label} jest wymagane",
 });
 
-module.exports = { signupSchema };
+const reSendSchema = Joi.object({
+  email: Joi.string().email().required(),
+}).messages({
+  "string.email": "Email must be correct address",
+  "any.required": "Email is required",
+});
+module.exports = { signupSchema, reSendSchema };
