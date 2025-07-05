@@ -124,7 +124,6 @@ const verification = async (req, res, next) => {
 
 const reVerification = async (req, res, next) => {
   const { email } = req.body;
-  console.log("req.body:", req.body);
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -144,7 +143,7 @@ const reVerification = async (req, res, next) => {
       html: `<a href="${process.env.BASE_URL}/api/users/verify/${verificationToken}">Click to verify</a>`,
       text: "Link",
     });
-    res.status(200).json({ message: "Message send, check your inbox" });
+    res.status(200).json({ message: "Verification email sent" });
   } catch (error) {
     next(error);
   }

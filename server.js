@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const mongoose = require("mongoose");
 const apiRouter = require("./api/index");
 const passport = require("passport");
@@ -8,10 +9,7 @@ const path = require("path");
 const { setupFolder } = require("./middleware/helpers");
 const { tempDir, storageImageDir } = require("./middleware/upload");
 
-require("dotenv").config();
-
 const { DB_HOST: urlDb } = process.env;
-
 
 const connection = mongoose.connect(urlDb);
 
@@ -39,12 +37,11 @@ app.use((err, req, res, next) => {
   }
 });
 
-
 app.listen(3000, async () => {
   try {
     await connection;
     await setupFolder(tempDir);
-    await setupFolder(storageImageDir); 
+    await setupFolder(storageImageDir);
     console.log("server started on 3000 port");
   } catch (e) {
     console.error("❌ Błąd podczas tworzenia folderów:", e.message);
